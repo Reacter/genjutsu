@@ -3,8 +3,8 @@ import { useForm } from 'react-hook-form'
 import Categories from '../Categories';
 import styled from 'styled-components';
 import {withRouter} from 'react-router-dom';
-import Quiz from '../../Quiz/Quiz'
-import Home from '../Home'
+import {useDispatch,useSelector} from 'react-redux'
+import {optionsSave} from '../../redux/options/optionsActions'
 
 const opentDB = require('opentdb-api')
 
@@ -48,13 +48,17 @@ const MyForm = styled.form`
 const FormStyled = (props) => {
     const [options,setOptions] = useState({})
     const { register, handleSubmit,errors } = useForm()
+    const dispatch = useDispatch()
 
     const onSubmit = (data) => {
+        console.log(data)
+        data.amount = parseInt(data.amount)
         setOptions(data)
         props.history.push('/quiz')
     }
     useEffect(() =>{
-        localStorage.setItem('options',JSON.stringify(options))
+        dispatch(optionsSave(options))
+        // localStorage.setItem('options',JSON.stringify(options))
     },[options])
 
     return (

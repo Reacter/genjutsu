@@ -1,8 +1,0 @@
-.flex-container {
-    display: flex;
-  }
-  flex-direction: column;
-  flex-wrap: wrap; The wrap value specifies that the flex items will wrap if necessary:
-  flex-flow: row wrap; The flex-flow property is a shorthand property for setting both the flex-direction and flex-wrap properties.
-  justify-content: center; The center value aligns the flex items at the center of the container:
-  

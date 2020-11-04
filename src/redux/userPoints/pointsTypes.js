@@ -1,0 +1,1 @@
+export const SAVE_POINTS = 'SAVE_POINTS'

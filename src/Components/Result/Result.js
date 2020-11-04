@@ -1,5 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
+import {useSelector} from 'react-redux'
+import axios from 'axios'
 
 const ResultDiv = styled.div`
     background-color: lightblue;
@@ -9,10 +11,13 @@ const ResultDiv = styled.div`
 `
 
 const Result = () =>{
-    const result = JSON.parse(localStorage.getItem('points'))
+    const result = useSelector(state => state.userPoints)
+    /* const result = JSON.parse(localStorage.getItem('points')) */
+
     console.log(result)
+    console.log('before last result')
     return (
-        <ResultDiv> Your result is : {result.pointTaken} out of {result.questions} questions </ResultDiv>
+        <ResultDiv> Your result is : {result.points} out of {result.questions} questions </ResultDiv>
     )
 }
 export default Result

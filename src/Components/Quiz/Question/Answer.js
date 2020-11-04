@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { act } from 'react-dom/test-utils'
 import styled from 'styled-components'
 
 const MyButton = styled.button`
@@ -11,11 +10,14 @@ const MyButton = styled.button`
     border-radius:6px;
     cursor:pointer;
 
-
 :hover{
     background-color:blue;
     border-color:blue;
 }
+/* :active{
+    background-color:yellow;
+    border-color:yellow;
+} */
 /* ${({isMouseUp, correct}) => isMouseUp && `background-color: ${correct ? 'green' : 'red'}`  } */
 ${({activeStatus, correct}) => !activeStatus && `background-color: ${correct ? 'green' : 'red'}`  }
 

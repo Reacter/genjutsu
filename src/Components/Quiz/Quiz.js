@@ -1,33 +1,34 @@
 import React, { useState, useEffect } from 'react'
 import Question from './Question/Question'
 import { withRouter } from 'react-router-dom';
-
+import {useSelector,useDispatch} from 'react-redux'
+import {savePoints,savePointsToFirebase} from '../../redux/actions'
 
 const opentDB = require('opentdb-api')
 
 const Quiz = (props) => {
-    const storageOptions = localStorage.getItem("options")
+    const options = useSelector(state => state.options.options)
+    // const storageOptions = localStorage.getItem("options")
     const [questions, setQuestions] = useState([])
-    const options = JSON.parse(storageOptions)
     const [id, setId] = useState(0)
     const [correctAnswers, setCorrectAnswers] = useState(0)
     const amount = parseInt(options.amount)
+    const dispatch = useDispatch()
+
 
     const updateId = () => {
             if (id < amount - 1) {
                 setId(prevId => prevId + 1)
             }else {
                 const pointsData = {
-                    pointTaken: correctAnswers,
+                    points: correctAnswers,
                     questions: parseInt(options.amount)
                 }
-    
-                localStorage.setItem('points',JSON.stringify(pointsData))
-                
+                console.log('before dispatch')
+                dispatch(savePointsToFirebase(pointsData))
+                // localStorage.setItem('points',JSON.stringify(pointsData))
                 props.history.push('/result')
-            }
-        
-        
+            } 
     }
     const updateCorrectId = () => {    
         setCorrectAnswers(correctAnswers + 1)
@@ -36,10 +37,11 @@ const Quiz = (props) => {
             setId(prevId => prevId + 1)
         } else {
             const pointsData = {
-                pointTaken: correctAnswers+1,
+                points: correctAnswers+1,
                 questions: parseInt(options.amount)
             }
-                localStorage.setItem('points',JSON.stringify(pointsData))
+                dispatch(savePointsToFirebase(pointsData))
+                // localStorage.setItem('points',JSON.stringify(pointsData))
                 props.history.push('/result')
         }
     }
@@ -54,7 +56,6 @@ const Quiz = (props) => {
         opentDB.getTrivia(myOptions).then(res => {
             setQuestions(res)
         })
-
     }, [])
     
 
