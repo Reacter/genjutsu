@@ -9,7 +9,9 @@ import styled from 'styled-components'
 import Result from './Components/Result/Result'
 import { Provider } from 'react-redux'
 import store from './redux/store'
-// import Test from './test'
+import SignIn from './Components/Auth/SignIn'
+import SignOut from './Components/Auth/SignOut'
+import SignUp from './Components/Auth/SignUp'
 import User from './redux/user/User'
 import firebase from './Firebase'
 import { createFirestoreInstance } from 'redux-firestore'
@@ -42,6 +44,8 @@ function App() {
                 <Route path="/" exact component={Home} />
                 <Route path="/quiz" component={Quiz} />
                 <Route path="/result" component={Result} />
+                <Route path='/signup' component={SignUp}/>
+                <Route path='/signin' component={SignIn}/>
               </Switch>
             </div>
           </MainWrapper>

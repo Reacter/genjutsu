@@ -3,12 +3,10 @@ import { useForm } from 'react-hook-form'
 import Categories from '../Categories';
 import styled from 'styled-components';
 import {withRouter} from 'react-router-dom';
-import {useDispatch,useSelector} from 'react-redux'
+import {useDispatch} from 'react-redux'
 import {optionsSave} from '../../redux/options/optionsActions'
 
-const opentDB = require('opentdb-api')
-
-const MyForm = styled.form`
+export const MyForm = styled.form`
     background-color:#3e2d52;
     display:flex;
     flex-direction:column;

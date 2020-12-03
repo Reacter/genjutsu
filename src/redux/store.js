@@ -9,8 +9,8 @@ import fbConfig from '../Firebase'
 
 const store = createStore(
     rootReducer,
-    compose(
-        applyMiddleware(logger, thunk.withExtraArgument({getFirebase})),
+    composeWithDevTools(
+        applyMiddleware(  thunk.withExtraArgument({getFirebase})),
        
     )
 )

@@ -1,6 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { signOut } from '../../redux/actions'
 
 const Navigation = styled.nav`
     display:flex;
@@ -25,15 +27,27 @@ const MyLink = styled(Link)`
     }
 `
 
-const Nav = ({children}) =>{
+const Nav = () => {
+    const dispatch = useDispatch()
+    const uid = useSelector(state => state.firebase.auth.uid)
+
     return (
-        
-        <Navigation>
+
+        <Navigation >
             <MyLink to="">Home</MyLink>
-            <MyLink to="/result">See Result</MyLink>
             <MyLink to="/startquiz">Start quiz</MyLink>
+            {uid ? <>
+                <MyLink to="/result">My Result</MyLink>
+                <MyLink to="/signin" onClick={() => dispatch(signOut())}>Sign Out</MyLink>
+            </>
+                : <>
+                    <MyLink to="/signup">Sign Up</MyLink>
+                    <MyLink to="/signin">Sign In</MyLink>
+                </>
+            }
+
         </Navigation>
-        
+
     )
 }
 

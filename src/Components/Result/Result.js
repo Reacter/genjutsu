@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
-import {useSelector} from 'react-redux'
-import axios from 'axios'
+import { useSelector } from 'react-redux'
+import { useFirestoreConnect } from 'react-redux-firebase'
 
 const ResultDiv = styled.div`
     background-color: lightblue;
@@ -10,14 +10,24 @@ const ResultDiv = styled.div`
     margin: 200px 200px 200px 
 `
 
-const Result = () =>{
-    const result = useSelector(state => state.userPoints)
-    /* const result = JSON.parse(localStorage.getItem('points')) */
+const Result = () => {
+    const uid = useSelector(state => state.firebase.auth.uid) 
+    const username = useSelector(state => state.firebase.auth.displayName)   
+    console.log(uid)
+    console.log(username)
+    useFirestoreConnect([{
+        collection: 'quizResult',
+        where:['userId','==',uid],
+        /* orderBy: ['date','desc'], */
+    }
+    ])
+    /* const result = useSelector(state => state.userPoints) */
+    const userResults = useSelector(state => state.firestore.data && state.firestore.data.quizResult)
 
-    console.log(result)
-    console.log('before last result')
     return (
-        <ResultDiv> Your result is : {result.points} out of {result.questions} questions </ResultDiv>
+        userResults  ? (Object.entries(userResults).map(([key, value]) => {
+            return (<h2 key={key}>{username} got {value.points} from {value.questions} questions</h2>)
+        })) : null
     )
 }
 export default Result
